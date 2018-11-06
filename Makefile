@@ -1,5 +1,5 @@
 EXEC = abb
-OBJ_FILES = abb.c main_abb.c testing.c
+OBJ_FILES = abb.c main_abb.c testing.c pruebas_alumno.c
 C_FLAGS = -std=c99 -Wall -Wconversion -Wno-sign-conversion -Werror
 
 all:
