@@ -40,3 +40,4 @@ bool abb_iter_in_al_final(const abb_iter_t *iter);
 
 void abb_iter_in_destruir(abb_iter_t* iter);
  
+void pruebas_abb_alumno(void);
