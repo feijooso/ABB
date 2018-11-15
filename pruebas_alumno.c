@@ -19,6 +19,7 @@ void prueba_abb_guardar() {
     const char* medio = "2";
     const char* mayor = "3";
     int valor1 = 4;
+    int valor2 = 5;
     const char* clave1 = "4";
     const char* clave2 = "-1";
     abb_guardar(abb, medio, NULL);
@@ -32,6 +33,9 @@ void prueba_abb_guardar() {
     print_test("no pertenece random", abb_pertenece(abb, "RANDOM") == false);
     print_test("menor obtener", abb_pertenece(abb, clave1));
     print_test("menor obtener", abb_pertenece(abb, clave1));
+    abb_guardar(abb, clave2, &valor2);
+    print_test("reemplazado valor clave2", abb_obtener(abb, clave2) == &valor2);
+    print_test("cantidad sigue igual", abb_cantidad(abb) == 5);
     abb_destruir(abb);
 }
 
@@ -63,11 +67,10 @@ void prueba_abb_borrar() {
     print_test("cantidad == 2", abb_cantidad(abb) == 2);
     print_test("borrar ya borrado", abb_borrar(abb, medio) == NULL);
     print_test("cantidad sigue igual", abb_cantidad(abb) == 2);
-    print_test("borrar 0", abb_borrar(abb, valor2) == &valorMedio);
+    print_test("borrar 0(0 hijo)", abb_borrar(abb, valor2) == &valorMedio);
     print_test("cantidad == 1", abb_cantidad(abb) == 1);
-    print_test("borrar 4", abb_borrar(abb, valor1) == &valorMenor);
+    print_test("borrar 4(raiz)", abb_borrar(abb, valor1) == &valorMenor);
     print_test("cantidad == 0", abb_cantidad(abb) == 0);
-
     abb_destruir(abb);
 }
 
