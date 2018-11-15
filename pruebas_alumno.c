@@ -53,22 +53,22 @@ void prueba_abb_borrar() {
     abb_guardar(abb, valor2, &valorMedio);
     abb_guardar(abb, valor3, &valorMayor);
     print_test("cantidad == 6", abb_cantidad(abb) == 6);
-    print_test("borrar menor", abb_borrar(abb, menor) == &valorMenor);
+    print_test("borrar 1 (1 hijo)", abb_borrar(abb, menor) == &valorMenor);
     print_test("cantidad == 5", abb_cantidad(abb) == 5);
-    print_test("borrar mayor", abb_borrar(abb, mayor) == &valorMayor);
+    print_test("borrar 3 (1 hijo)", abb_borrar(abb, mayor) == &valorMayor);
     print_test("cantidad == 4", abb_cantidad(abb) == 4);
-    print_test("borrar medio", abb_borrar(abb, medio) == &valorMedio);
+    print_test("borrar 2 (2 hijos)", abb_borrar(abb, medio) == &valorMedio);
     print_test("cantidad == 3", abb_cantidad(abb) == 3);
-    print_test("borrar valor3", abb_borrar(abb, valor3) == &valorMayor);
+    print_test("borrar 5 (0 hijos)", abb_borrar(abb, valor3) == &valorMayor);
     print_test("cantidad == 2", abb_cantidad(abb) == 2);
     print_test("borrar ya borrado", abb_borrar(abb, medio) == NULL);
     print_test("cantidad sigue igual", abb_cantidad(abb) == 2);
-    print_test("borrar valor2", abb_borrar(abb, valor2) == &valorMedio);
+    print_test("borrar 0", abb_borrar(abb, valor2) == &valorMedio);
     print_test("cantidad == 1", abb_cantidad(abb) == 1);
-    print_test("borrar valor1", abb_borrar(abb, valor1) == &valorMenor);
+    print_test("borrar 4", abb_borrar(abb, valor1) == &valorMenor);
     print_test("cantidad == 0", abb_cantidad(abb) == 0);
 
-    abb_destruir(abb);  
+    abb_destruir(abb);
 }
 
 void pruebas_abb_alumno() {
