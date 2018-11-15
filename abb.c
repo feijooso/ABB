@@ -120,7 +120,7 @@ bool abb_guardar(abb_t* arbol, const char* clave, void* dato) {
     return true;
 }
 
-void* abb_borrar(abb_t* arbol, const char* clave){
+void* abb_borrar(abb_t* arbol, const char* clave) {
     abb_nodo_t* nodo_a_borrar = buscar_nodo(arbol, arbol->raiz, clave);
     if(nodo_a_borrar == NULL) return NULL;
     void* dato = nodo_a_borrar->dato;
@@ -185,15 +185,15 @@ void* abb_obtener(const abb_t* arbol, const char* clave) {
     return nodo->dato;
 }
 
-bool abb_pertenece(const abb_t* arbol, const char* clave){
+bool abb_pertenece(const abb_t* arbol, const char* clave) {
     return buscar_nodo(arbol, arbol->raiz, clave) != NULL;
 }
 
-size_t abb_cantidad(abb_t* arbol){
+size_t abb_cantidad(abb_t* arbol) {
     return arbol->cantidad;
 }
 
-void abb_destruir(abb_t* arbol){
+void abb_destruir(abb_t* arbol) {
     free(arbol);
 }
 

@@ -77,5 +77,5 @@ void prueba_abb_borrar() {
 void pruebas_abb_alumno() {
     //prueba_abb_vacio();
     //prueba_abb_guardar();
-    prueba_abb_borrar();
+    //prueba_abb_borrar();
 }
