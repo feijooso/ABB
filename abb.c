@@ -30,9 +30,9 @@ typedef struct abb_iter {
 
 /* FUNCIONES AUXILIARES */
 
-void destruir_dato(void* dato) {
+/*void destruir_dato(void* dato) {
     free(dato);
-}
+}*/
 
 abb_nodo_t* crear_nodo(const char* clave, void* dato) {
     abb_nodo_t* nodo = malloc(sizeof(abb_nodo_t));
@@ -197,11 +197,11 @@ void abb_destruir(abb_t* arbol){
 
 /* PRIMITIVAS Y FUNCIONES AUXILIARES ITERADOR INTERNO */
  
-/*void abb_iterar(abb_nodo_t nodo, bool visitar(const char *, void *, void *), void *extra) {
+void abb_iterar(abb_nodo_t* nodo, bool visitar(const char *, void *, void *), void *extra) {
 
     if(nodo != NULL){
         abb_iterar(nodo->izq, visitar, extra);
-        visitar(nodo->dato, extra);
+        if (!visitar(nodo->clave, nodo->dato, extra)) return;
         abb_iterar(nodo->der, visitar, extra);
     }
 }
@@ -211,7 +211,7 @@ void abb_in_order(abb_t *arbol, bool visitar(const char *, void *, void *), void
     if (arbol->raiz != NULL){
         abb_iterar(arbol->raiz, visitar, extra);
     }
-}*/
+}
 
 /* PRIMITIVAS Y FUNCIONES AUXILIARES ITERADOR EXTERNO */
 
