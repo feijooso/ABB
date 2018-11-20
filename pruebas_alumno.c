@@ -38,41 +38,103 @@ void prueba_abb_guardar() {
     abb_destruir(abb);
 }
 
+void prueba_abb_reemplazar(){
+    printf("%s\n","PRUEBAS REEMPLAZAR");
+
+    abb_t* abb = abb_crear(strcmp, NULL);
+    int valor = 2;
+    abb_guardar(abb, "Numero", &valor);
+    print_test("Se guardo la clave Numero", true);
+    print_test("Numero pertenece", abb_pertenece(abb, "Numero"));
+    print_test("El valor de Numero es 2", abb_obtener(abb, "Numero") == &valor);
+    int valor_nuevo = 3;
+    abb_guardar(abb, "Numero", &valor_nuevo);
+    print_test("Se reemplazo la clave Numero", true);
+    print_test("Numero pertenece", abb_pertenece(abb, "Numero"));
+    print_test("El valor de Numero es 3", abb_obtener(abb, "Numero") == &valor_nuevo);
+
+    abb_destruir(abb);
+
+    abb_t* abb1 = abb_crear(strcmp, NULL);
+    int a = 1;
+    abb_guardar(abb1, "1", &a);
+    int b = 2;
+    abb_guardar(abb1, "2", &b);
+    int c = 3;
+    char *clave = "3";
+    abb_guardar(abb1, clave, &c);
+    int d = 4;
+    abb_guardar(abb1, "4", &d);
+    int e = 5;
+    abb_guardar(abb1, "5", &e);
+    int f = 6;
+    abb_guardar(abb1, "6", &f);
+    int g = 7;
+    abb_guardar(abb1, "7", &g);
+    print_test("Se guardaron 7 elementos", true);
+    int h = 0;
+    abb_guardar(abb1, "2", &h);
+    print_test("Reemplazo el valor de dos por cero", abb_obtener(abb1, "2") == &h);
+    abb_guardar(abb1, "1", &h);
+    print_test("Reemplazo el valor de uno por cero", abb_obtener(abb1, "1") == &h);
+    abb_guardar(abb1, "7", &h);
+    print_test("Reemplazo el valor de siete por cero", abb_obtener(abb1, "7") == &h);
+    print_test("La cantidad no cambio",abb_cantidad(abb1) == 7 );
+
+    abb_destruir(abb1);
+
+}
+
 void prueba_abb_borrar() {
     printf("%s\n","PRUEBAS BORRAR");
     abb_t* abb = abb_crear(strcmp, NULL);
-    const char* menor = "1";
-    const char* medio = "2";
-    const char* mayor = "3";
-    const char* valor1 = "4";
-    const char* valor2 = "0";
-    const char* valor3 = "5";
-    int valorMenor = 1;
-    int valorMedio = 2;
-    int valorMayor = 3;
-    abb_guardar(abb, medio, &valorMedio);
-    abb_guardar(abb, menor, &valorMenor);
-    abb_guardar(abb, mayor, &valorMayor);
-    abb_guardar(abb, valor1, &valorMenor);
-    abb_guardar(abb, valor2, &valorMedio);
-    abb_guardar(abb, valor3, &valorMayor);
+    int a = 7;
+    abb_guardar(abb, "7", &a);
+    int b = 3;
+    abb_guardar(abb, "3", &b);
+    int c = 1;
+    abb_guardar(abb, "1", &c);
+    int d = 6;
+    abb_guardar(abb, "6", &d);
+    int e = 4;
+    abb_guardar(abb, "4", &e);
+    int f = 5;
+    abb_guardar(abb, "5", &f);
+    int g = 8;
+    abb_guardar(abb, "8", &g);
+    print_test("Se insertaron siete elementos", true);
+    print_test("Cantidad es 7", abb_cantidad(abb) == 7);
+    print_test("Borrar 3 (dos hijos)", abb_borrar(abb, "3") == &b);
     print_test("Cantidad es 6", abb_cantidad(abb) == 6);
-    print_test("Borrar 1", abb_borrar(abb, menor) == &valorMenor);
+    print_test("Borrar 8 (cero hijos)", abb_borrar(abb, "8") == &g);
     print_test("Cantidad es 5", abb_cantidad(abb) == 5);
-    print_test("Borrar 3", abb_borrar(abb, mayor) == &valorMayor);
+    print_test("Borrar 6 (un hijo)", abb_borrar(abb, "6") == &d);
     print_test("Cantidad es 4", abb_cantidad(abb) == 4);
-    print_test("Borrar 2", abb_borrar(abb, medio) == &valorMedio);
+    print_test("Borrar 4 (dos hijos)", abb_borrar(abb, "4") == &e);
     print_test("Cantidad es 3", abb_cantidad(abb) == 3);
-    print_test("Borrar 5 ", abb_borrar(abb, valor3) == &valorMayor);
+    print_test("Borrar 7 (un hijo)", abb_borrar(abb, "7") == &a);
     print_test("Cantidad es 2", abb_cantidad(abb) == 2);
-    print_test("Borrar ya borrado", abb_borrar(abb, medio) == NULL);
-    print_test("Cantidad sigue igual", abb_cantidad(abb) == 2);
-    print_test("Borrar 0", abb_borrar(abb, valor2) == &valorMedio);
+    print_test("Borrar 5 (un hijo)", abb_borrar(abb, "5") == &f);
     print_test("Cantidad es 1", abb_cantidad(abb) == 1);
-    print_test("Borrar 4", abb_borrar(abb, valor1) == &valorMenor);
+    print_test("Borrar 1 (cero hijos)", abb_borrar(abb, "1") == &c);
     print_test("Cantidad es 0", abb_cantidad(abb) == 0);
 
     abb_destruir(abb);
+}
+
+void prueba_abb_destruir(){
+    printf("%s\n","PRUEBAS DESTRUIR");
+    abb_t* abb = abb_crear(strcmp, NULL);
+    abb_destruir(abb);
+    print_test("Destruir un arbol vacio", true);
+    abb_t* abb1 = abb_crear(strcmp, NULL);
+    int tres = 3;
+    abb_guardar(abb1, "3", &tres);
+    abb_borrar(abb1,"3");
+    int siete = 7;
+    abb_guardar(abb1,"7", &siete);
+    abb_destruir(abb1);
+    print_test("Destruir un arbol con un elemento", true);
 }
 
 bool visitar1(const char* clave, void* dato, void* extra) {
@@ -117,6 +179,9 @@ void pruebas_abb_iter_externo(){
     printf("%s\n","Se creo una arbol vacio");
     abb_iter_t* iter1 = abb_iter_in_crear(abb);
     print_test("El iterador esta al final", abb_iter_in_al_final(iter1));
+    print_test("No puede avanzar", !abb_iter_in_avanzar(iter1));
+    print_test("Ver actual es NULL", abb_iter_in_ver_actual(iter1) == NULL);
+
     abb_iter_in_destruir(iter1);
 
     int uno = 1;
@@ -147,6 +212,7 @@ void pruebas_abb_iter_externo(){
     print_test("Avanzo correctamente", strcmp(abb_iter_in_ver_actual(iter2),"9") == 0);
     print_test("Puede avanzar", abb_iter_in_avanzar(iter2));
     print_test("Iter esta al final", abb_iter_in_al_final(iter2));
+    print_test("No puede avanzar", !abb_iter_in_avanzar(iter2));
 
     abb_iter_in_destruir(iter2);
 
@@ -275,7 +341,9 @@ void pruebas_abb_iterar_volumen(size_t largo){
 void pruebas_abb_alumno() {
     prueba_abb_vacio();
     prueba_abb_guardar();
+    prueba_abb_reemplazar();
     prueba_abb_borrar();
+    prueba_abb_destruir();
     pruebas_abb_iter_interno();
     pruebas_abb_iter_externo();
     pruebas_abb_volumen(50, true);
