@@ -135,10 +135,38 @@ void prueba_abb_destruir(){
     abb_guardar(abb1,"7", &siete);
     abb_destruir(abb1);
     print_test("Destruir un arbol con un elemento", true);
+    abb_t* abb2 = abb_crear(strcmp, NULL);
+    int cinco = 5;
+    abb_guardar(abb2, "5", &cinco);
+    int seis = 6;
+    abb_guardar(abb2, "6", &seis);
+    int cero = 0;
+    abb_guardar(abb2, "0", &cero);
+    int uno = 1;
+    abb_guardar(abb2, "1", &uno);
+    abb_destruir(abb2);
+    print_test("Destruir un arbol con varios elementos", true);
+    abb_t* abb3 = abb_crear(strcmp, NULL);
+    abb_guardar(abb3, "5", &cinco);
+    abb_guardar(abb3, "6", &seis);
+    abb_guardar(abb3, "0", &cero);
+    abb_guardar(abb3, "1", &uno);
+    abb_guardar(abb3, "5", &seis);
+    abb_guardar(abb3, "0", &seis);
+    abb_guardar(abb3, "1", &seis);
+    abb_destruir(abb3);
+    print_test("Destruir un arbol con valores reemplazados", true);
 }
 
 bool visitar1(const char* clave, void* dato, void* extra) {
     if (*(int*) dato < *(int*) extra) return false;
+
+    *(int*) extra = *(int*) dato;
+    return true;
+}
+
+bool visitar_corte(const char* clave, void* dato, void* extra) {
+    if (*(int*) dato > 4) return false;
 
     *(int*) extra = *(int*) dato;
     return true;
@@ -168,7 +196,13 @@ void pruebas_abb_iter_interno(){
     abb_in_order(abb, visitar1, &valor);
     print_test("Itera in order", valor == 9);
 
+    valor = -1;
+    abb_in_order(abb, visitar_corte, &valor);
+    print_test("Prueba visitar con corte", valor == 4);
+
     abb_destruir(abb);
+
+
 
 }
 
@@ -347,5 +381,5 @@ void pruebas_abb_alumno() {
     pruebas_abb_iter_interno();
     pruebas_abb_iter_externo();
     pruebas_abb_volumen(50, true);
-    pruebas_abb_iterar_volumen(50);
+    pruebas_abb_iterar_volumen(60);
 }

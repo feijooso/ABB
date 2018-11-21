@@ -202,40 +202,38 @@ size_t abb_cantidad(abb_t* arbol) {
     return arbol->cantidad;
 }
 
-void abb_borrar_nodos(abb_nodo_t* nodo){
-    if (nodo != NULL){
-        abb_borrar_nodos(nodo->izq);
-        abb_borrar_nodos(nodo->der);
-        free(nodo->clave);
-        /*if (arbol->destruir_dato != NULL){
-            arbol->destruir_dato(nodo->dato);
-        }*/
-        free(nodo);
-    }
+void abb_borrar_nodos(abb_nodo_t* nodo, void destruir_dato(void*)){
+    if (nodo == NULL) return;
+    abb_borrar_nodos(nodo->izq, destruir_dato);
+    abb_borrar_nodos(nodo->der, destruir_dato);
+    free(nodo->clave);
+    free(nodo);
 }
 
 void abb_destruir(abb_t* arbol) {
-    abb_borrar_nodos(arbol->raiz);
+    abb_borrar_nodos(arbol->raiz, arbol->destruir_dato);
     free(arbol);
 }
 
 
 /* PRIMITIVAS Y FUNCIONES AUXILIARES ITERADOR INTERNO */
 
-void abb_iterar(abb_nodo_t* nodo, bool visitar(const char *, void *, void *), void *extra) {
+void abb_iterar(abb_nodo_t* nodo, bool visitar(const char *, void *, void *), void *extra, bool* seguir) {
 
-    if(nodo != NULL){
-        abb_iterar(nodo->izq, visitar, extra);
-        if (!visitar(nodo->clave, nodo->dato, extra)) return;
-        abb_iterar(nodo->der, visitar, extra);
+    if(nodo == NULL) return;
+
+    abb_iterar(nodo->izq, visitar, extra, seguir);
+    if (*seguir){
+        *seguir = visitar(nodo->clave, nodo->dato, extra);
     }
+    abb_iterar(nodo->der, visitar, extra, seguir);
 }
 
 void abb_in_order(abb_t *arbol, bool visitar(const char *, void *, void *), void *extra){
 
-    if (arbol->raiz != NULL){
-        abb_iterar(arbol->raiz, visitar, extra);
-    }
+    bool seguir = true;
+    abb_iterar(arbol->raiz, visitar, extra, &seguir);
+
 }
 
 /* PRIMITIVAS Y FUNCIONES AUXILIARES ITERADOR EXTERNO */
