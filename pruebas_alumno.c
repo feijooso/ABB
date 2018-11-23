@@ -5,6 +5,10 @@
 #include "abb.h"
 #include "testing.h"
 
+void destruir_dato(void* dato){
+    free(dato);
+}
+
 void prueba_abb_vacio() {
     printf("%s\n","PRUEBAS ABB VACIO");
     abb_t* abb = abb_crear(strcmp, NULL);
@@ -202,8 +206,6 @@ void pruebas_abb_iter_interno(){
 
     abb_destruir(abb);
 
-
-
 }
 
 void pruebas_abb_iter_externo(){
@@ -254,6 +256,20 @@ void pruebas_abb_iter_externo(){
 
 }
 
+void pruebas_abb_destruir_dato(){
+    printf("%s\n","PRUEBAS DESTRUIR DATO");
+    abb_t* abb = abb_crear(strcmp, destruir_dato);
+    void* dato1 = calloc(1,sizeof(char));
+    abb_guardar(abb, "1", dato1);
+    void* dato2 = calloc(1,sizeof(char));
+    abb_guardar(abb, "2", dato2);
+    void* dato3 = calloc(1,sizeof(char));
+    abb_guardar(abb, "3", dato3);
+    abb_destruir(abb);
+    print_test("Se destruyo el arbol con datos dinamicos", true);
+
+}
+
 void pruebas_abb_volumen(size_t largo, bool debug){
     printf("%s\n","PRUEBAS VOLUMEN" );
     abb_t* abb = abb_crear(strcmp,NULL);
@@ -293,7 +309,7 @@ void pruebas_abb_volumen(size_t largo, bool debug){
     if (debug) print_test("El arbol esta vacio", abb_cantidad(abb) == 0);
 
     abb_destruir(abb);
-    abb = abb_crear(strcmp,free);
+    abb = abb_crear(strcmp, NULL);
 
     ok = true;
     for (size_t i = 0; i < largo; i++) {
@@ -378,8 +394,9 @@ void pruebas_abb_alumno() {
     prueba_abb_reemplazar();
     prueba_abb_borrar();
     prueba_abb_destruir();
+    pruebas_abb_destruir_dato();
     pruebas_abb_iter_interno();
     pruebas_abb_iter_externo();
     pruebas_abb_volumen(50, true);
-    pruebas_abb_iterar_volumen(60);
+    pruebas_abb_iterar_volumen(50);
 }
