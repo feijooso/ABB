@@ -244,7 +244,7 @@ void abb_in_order(abb_t *arbol, bool visitar(const char *, void *, void *), void
 
 /* PRIMITIVAS Y FUNCIONES AUXILIARES ITERADOR EXTERNO */
 
-abb_iter_t *abb_iter_in_crear(const abb_t *arbol) {
+abb_iter_t *abb_iter_in_crear(const abb_t *arbol, char* clave) {
 
     abb_iter_t* iter = malloc(sizeof(abb_iter_t));
     if (iter == NULL) return NULL;
@@ -261,7 +261,7 @@ abb_iter_t *abb_iter_in_crear(const abb_t *arbol) {
         iter->actual = NULL;
         return iter;
     }
-    abb_nodo_t* nodo = arbol->raiz;
+    abb_nodo_t* nodo = buscar_padre(arbol, clave);
     pila_apilar(iter->pila, nodo);
     while(nodo->izq != NULL){
         pila_apilar(iter->pila, nodo->izq);
@@ -301,7 +301,7 @@ bool abb_iter_in_avanzar(abb_iter_t *iter) {
 
 }
 
-const char *abb_iter_in_ver_actual(const abb_iter_t *iter) {
+char* abb_iter_in_ver_actual(const abb_iter_t *iter) {
     abb_nodo_t* nodo = pila_ver_tope(iter->pila);
     if (nodo == NULL) return NULL;
     return nodo->clave;
